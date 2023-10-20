@@ -1,15 +1,42 @@
-#include "main.h"
-#include<stdio.h>
 /**
- * _printf - produces output according to a format.
- * @format: string
- * Return: the number of characters printed excluding '\0'
- */
+  * _printf - function that produces output according to a format.
+  * @format: format (char, string, int, decimal)
+  * Return: size the output text;
+  */
 int _printf(const char *format, ...)
 {
-va_list args;
-va_start(args, format);
-int count = vprintf(format, args);
-va_end(args);
-return (count);
+va_list ap;
+int (*f)(va_list);
+unsigned int i = 0, cprint = 0;
+if (format == NULL)
+return (-1);
+va_start(ap, format);
+while (format[i])
+{
+while (format[i] != '%' && format[i])
+{
+_putchar(format[i]);
+cprint++;
+i++;
+}
+if (format[i] == '\0')
+return (cprint);
+f = find_function(&format[i + 1]);
+if (f != NULL)
+{
+cprint += f(ap);
+i += 2;
+continue;
+}
+if (!format[i + 1])
+return (-1);
+_putchar(format[i]);
+cprint++;
+if (format[i + 1] == '%')
+i += 2;
+else
+i++;
+}
+va_end(ap);
+return (cprint);
 }
