@@ -1,17 +1,12 @@
 #include "main.h"
-/**
- * _printf - print char
- * @format : pointer to constant char
- *
- */
+
 int _printf(const char *format, ...)
 {
 int i = 0;
 int count = 0;
 va_list args;
-
 va_start(args, format);
-while (format && format[i])
+while (format[i] != '\0')
 {
 if (format[i] != '%')
 {
@@ -21,17 +16,28 @@ count++;
 else
 {
 i++;
-if (format[i] == 'c')
-print_char(args, &count);
-else if (format[i] == 's')
-print_string(args, &count);
-else if (format[i] == '%')
-print_percent(&count);
-else if (format[i] == 'd' || format[i] == 'i')
-print_int(args, &count);
+switch (format[i])
+{
+case 'c':
+print_char(va_arg(args, int), &count);
+break;
+case 's':
+print_string(va_arg(args, const char *), &count);
+break;
+case 'd':
+case 'i':
+print_integer(va_arg(args, int), &count);
+break;
+case '%':
+_putchar('%');
+count++;
+break;
+default:
+break;
+}
 }
 i++;
 }
 va_end(args);
-return count;
+return (count);
 }

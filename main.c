@@ -1,5 +1,7 @@
 #include "main.h"
-#include<stdio.h>
+#include "print_chars.c"
+#include "print_integers.c"
+
 /**
  * main - Entry point
  *
@@ -7,9 +9,11 @@
  */
 int main(void)
 {
-int num = -12345;
-char *str = "Hello, world!";
-_printf("Character: %c\nString: %s\nPercent sign:
-%%\nInteger (decimal): %d\nInteger (int): %i\n", 'A', str, num, num);
+char c = 'c';
+char name[] = "Abdelrahman";
+int number = 42;
+
+int count = 0;
+_printf("Hello, %s. Your name is printed using %% and the %c character. The number is %d.\n", name, c, number);
 return (0);
 }
